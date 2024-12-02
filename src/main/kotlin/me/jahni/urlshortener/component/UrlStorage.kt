@@ -16,12 +16,16 @@ class UrlStorage(
 
     fun findByOriginalUrl(originalUrl: String): Url? {
         val key = generateOriginalUrlKey(originalUrl)
-        return findUrlInCacheOrDb(key, originalUrl)
+        return findUrlInCacheOrDb(key, originalUrl) {
+            urlRepository.findByOriginalUrl(originalUrl)
+        }
     }
 
     fun findByShortUrl(shortUrl: String): Url? {
         val key = generateShortUrlKey(shortUrl)
-        return findUrlInCacheOrDb(key, shortUrl)
+        return findUrlInCacheOrDb(key, shortUrl) {
+            urlRepository.findByShortUrl(shortUrl)
+        }
     }
 
     fun save(url: Url) {
@@ -29,13 +33,13 @@ class UrlStorage(
         cacheUrl(url)
     }
 
-    private fun findUrlInCacheOrDb(key: String, originalUrl: String): Url? {
+    private fun findUrlInCacheOrDb(key: String, originalUrl: String, dbQuery: () -> Url?): Url? {
         val cached = redisRepository.get(key)
         if (cached != null) {
             return objectMapper.readValue(cached, Url::class.java)
         }
 
-        val url = urlRepository.findByOriginalUrl(originalUrl)
+        val url = dbQuery()
         if (url != null) {
             redisRepository.set(
                 key = key,

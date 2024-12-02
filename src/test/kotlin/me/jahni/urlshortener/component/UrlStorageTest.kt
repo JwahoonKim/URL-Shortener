@@ -130,13 +130,14 @@ class UrlStorageTest {
             .thenReturn(url)
 
         // When
-        val result = urlStorage.findByShortUrl(shortUrl)!!
+        val result = urlStorage.findByShortUrl(shortUrl)
+        println("result = ${result}")
 
         // Then
         assertNotNull(result)
-        assertEquals(url.id, result.id)
-        assertEquals(url.shortUrl, result.shortUrl)
-        assertEquals(url.originalUrl, result.originalUrl)
+        assertEquals(url.id, result?.id)
+        assertEquals(url.shortUrl, result?.shortUrl)
+        assertEquals(url.originalUrl, result?.originalUrl)
         verify(redisRepository).set("short_url:$shortUrl", objectMapper.writeValueAsString(url))
     }
 
