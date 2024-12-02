@@ -5,9 +5,9 @@ import me.jahni.urlshortener.component.UrlShortener
 import me.jahni.urlshortener.component.UrlStorage
 import me.jahni.urlshortener.infra.db.Url
 import me.jahni.urlshortener.service.input.ShortenUrlInput
+import me.jahni.urlshortener.service.output.GetOriginalUrlOutput
 import me.jahni.urlshortener.service.output.ShortenUrlOutput
 import org.springframework.stereotype.Service
-import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ShortenUrlService(
@@ -37,6 +37,14 @@ class ShortenUrlService(
 
         return ShortenUrlOutput(
             shortUrl = shortenUrl
+        )
+    }
+
+    fun getOriginalUrl(shortUrl: String): GetOriginalUrlOutput {
+        val findUrl = urlStorage.findByShortUrl(shortUrl)
+
+        return GetOriginalUrlOutput(
+            originalUrl = findUrl?.originalUrl
         )
     }
 
