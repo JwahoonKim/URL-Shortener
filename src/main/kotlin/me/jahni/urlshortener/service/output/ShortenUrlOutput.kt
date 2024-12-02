@@ -1,4 +1,4 @@
-package me.jahni.urlshortner.service.output
+package me.jahni.urlshortener.service.output
 
 data class ShortenUrlOutput(
     val shortUrl: String,

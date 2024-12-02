@@ -1,8 +1,8 @@
-package me.jahni.urlshortner.controller
+package me.jahni.urlshortener.controller
 
-import me.jahni.urlshortner.controller.request.ShortenUrlRequest
-import me.jahni.urlshortner.controller.response.ShortenUrlResponse
-import me.jahni.urlshortner.service.ShortenUrlService
+import me.jahni.urlshortener.controller.request.ShortenUrlRequest
+import me.jahni.urlshortener.controller.response.ShortenUrlResponse
+import me.jahni.urlshortener.service.ShortenUrlService
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RestController

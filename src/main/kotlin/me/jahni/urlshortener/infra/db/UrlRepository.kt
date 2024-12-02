@@ -1,4 +1,4 @@
-package me.jahni.urlshortner.infra.db;
+package me.jahni.urlshortener.infra.db;
 
 import org.springframework.data.jpa.repository.JpaRepository
 

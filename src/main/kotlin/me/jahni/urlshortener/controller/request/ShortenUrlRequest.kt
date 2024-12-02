@@ -1,6 +1,6 @@
-package me.jahni.urlshortner.controller.request
+package me.jahni.urlshortener.controller.request
 
-import me.jahni.urlshortner.service.input.ShortenUrlInput
+import me.jahni.urlshortener.service.input.ShortenUrlInput
 
 data class ShortenUrlRequest(
     val originalUrl: String,

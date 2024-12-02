@@ -1,6 +1,6 @@
-package me.jahni.urlshortner.controller.response
+package me.jahni.urlshortener.controller.response
 
-import me.jahni.urlshortner.service.output.ShortenUrlOutput
+import me.jahni.urlshortener.service.output.ShortenUrlOutput
 
 data class ShortenUrlResponse(
     val shortUrl: String,

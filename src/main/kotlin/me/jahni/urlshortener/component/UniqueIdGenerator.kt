@@ -1,6 +1,6 @@
-package me.jahni.urlshortner.component
+package me.jahni.urlshortener.component
 
-import me.jahni.urlshortner.infra.redis.RedisRepository
+import me.jahni.urlshortener.infra.redis.RedisRepository
 import org.springframework.stereotype.Component
 
 private const val REDIS_UNIQUE_ID_KEY = "unique_id"

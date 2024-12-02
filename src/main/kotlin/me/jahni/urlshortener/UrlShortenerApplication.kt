@@ -1,11 +1,11 @@
-package me.jahni.urlshortner
+package me.jahni.urlshortener
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
-class UrlShortnerApplication
+class UrlShortenerApplication
 
 fun main(args: Array<String>) {
-    runApplication<UrlShortnerApplication>(*args)
+    runApplication<UrlShortenerApplication>(*args)
 }

@@ -1,9 +1,9 @@
-package me.jahni.urlshortner.component
+package me.jahni.urlshortener.component
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import me.jahni.urlshortner.infra.db.Url
-import me.jahni.urlshortner.infra.db.UrlRepository
-import me.jahni.urlshortner.infra.redis.RedisRepository
+import me.jahni.urlshortener.infra.db.Url
+import me.jahni.urlshortener.infra.db.UrlRepository
+import me.jahni.urlshortener.infra.redis.RedisRepository
 import org.springframework.stereotype.Component
 
 @Component

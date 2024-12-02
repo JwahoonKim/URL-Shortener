@@ -1,12 +1,13 @@
-package me.jahni.urlshortner.service
+package me.jahni.urlshortener.service
 
-import me.jahni.urlshortner.component.UniqueIdGenerator
-import me.jahni.urlshortner.component.UrlShortener
-import me.jahni.urlshortner.component.UrlStorage
-import me.jahni.urlshortner.infra.db.Url
-import me.jahni.urlshortner.service.input.ShortenUrlInput
-import me.jahni.urlshortner.service.output.ShortenUrlOutput
+import me.jahni.urlshortener.component.UniqueIdGenerator
+import me.jahni.urlshortener.component.UrlShortener
+import me.jahni.urlshortener.component.UrlStorage
+import me.jahni.urlshortener.infra.db.Url
+import me.jahni.urlshortener.service.input.ShortenUrlInput
+import me.jahni.urlshortener.service.output.ShortenUrlOutput
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 
 @Service
 class ShortenUrlService(
@@ -35,7 +36,7 @@ class ShortenUrlService(
         urlStorage.save(url)
 
         return ShortenUrlOutput(
-            shortUrl = "shortUrl"
+            shortUrl = shortenUrl
         )
     }
 

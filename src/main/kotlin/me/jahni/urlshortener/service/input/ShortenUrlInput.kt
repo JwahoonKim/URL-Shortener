@@ -1,4 +1,4 @@
-package me.jahni.urlshortner.service.input
+package me.jahni.urlshortener.service.input
 
 data class ShortenUrlInput(
     val longUrl: String,

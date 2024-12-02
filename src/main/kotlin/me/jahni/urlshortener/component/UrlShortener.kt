@@ -1,4 +1,4 @@
-package me.jahni.urlshortner.component
+package me.jahni.urlshortener.component
 
 import org.springframework.stereotype.Component
 
