@@ -14,7 +14,7 @@ class UrlStorage(
 ) {
 
     fun findByOriginalUrl(originalUrl: String): Url? {
-        val key = generateRedisKey(originalUrl)
+        val key = generateOriginalUrlKey(originalUrl)
         val cacheEntity = redisRepository.get(key)
 
         if (cacheEntity != null) {
@@ -35,12 +35,17 @@ class UrlStorage(
         return null
     }
 
-    private fun generateRedisKey(originalUrl: String): String {
+    fun save(url: Url) {
+        urlRepository.save(url)
+        redisRepository.set(generateOriginalUrlKey(url.originalUrl), objectMapper.writeValueAsString(url))
+        redisRepository.set(generateShortUrlKey(url.shortUrl), objectMapper.writeValueAsString(url))
+    }
+
+    private fun generateOriginalUrlKey(originalUrl: String): String {
         return "original_url:$originalUrl"
     }
 
-    fun save(url: Url) {
-        urlRepository.save(url)
-        redisRepository.set(generateRedisKey(url.originalUrl), objectMapper.writeValueAsString(url))
+    private fun generateShortUrlKey(shortUrl: String): String {
+        return "short_url:$shortUrl"
     }
 }
