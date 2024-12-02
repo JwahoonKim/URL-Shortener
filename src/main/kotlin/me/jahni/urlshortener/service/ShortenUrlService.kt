@@ -17,27 +17,28 @@ class ShortenUrlService(
 ) {
 
     fun shortenUrl(input: ShortenUrlInput): ShortenUrlOutput {
-        val findUrl = urlStorage.findByOriginalUrl(input.longUrl)
-
-        if (findUrl != null) {
+        val existUrl = urlStorage.findByOriginalUrl(input.longUrl)
+        if (existUrl != null) {
             return ShortenUrlOutput(
-                shortUrl = findUrl.shortUrl
+                shortUrl = existUrl.shortUrl
             )
         }
 
+        val shortenUrl = createAndSaveShortenUrl(input)
+        return ShortenUrlOutput(
+            shortUrl = shortenUrl
+        )
+    }
+
+    private fun createAndSaveShortenUrl(input: ShortenUrlInput): String {
         val id = uniqueIdGenerator.generate()
         val shortenUrl = urlShortener.shorten(id)
-
         val url = Url(
             shortUrl = shortenUrl,
             originalUrl = input.longUrl
         )
-
         urlStorage.save(url)
-
-        return ShortenUrlOutput(
-            shortUrl = shortenUrl
-        )
+        return shortenUrl
     }
 
     fun getOriginalUrl(shortUrl: String): GetOriginalUrlOutput {
