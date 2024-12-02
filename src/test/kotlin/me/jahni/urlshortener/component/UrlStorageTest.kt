@@ -96,4 +96,65 @@ class UrlStorageTest {
         verify(urlRepository).save(url)
         verify(redisRepository).set("original_url:${url.originalUrl}", objectMapper.writeValueAsString(url))
     }
+
+    @Test
+    fun `단축_주소로_찾기_캐시_적중`() {
+        // Given
+        val shortUrl = "abc123"
+        val url = Url(1L, shortUrl, "https://example.com")
+
+        `when`(redisRepository.get("short_url:$shortUrl"))
+            .thenReturn(objectMapper.writeValueAsString(url))
+
+        // When
+        val result = urlStorage.findByShortUrl(shortUrl)!!
+
+        // Then
+        assertNotNull(result)
+        assertThat(result.id).isEqualTo(url.id)
+        assertThat(result.shortUrl).isEqualTo(url.shortUrl)
+        assertThat(result.originalUrl).isEqualTo(url.originalUrl)
+        verify(urlRepository, never()).findByShortUrl(shortUrl)
+    }
+
+    @Test
+    fun `단축_주소로_찾기_DB_조회`() {
+        // Given
+        val shortUrl = "abc123"
+        val url = Url(1L, shortUrl, "https://example.com")
+
+        `when`(redisRepository.get("short_url:$shortUrl"))
+            .thenReturn(null)
+
+        `when`(urlRepository.findByShortUrl(shortUrl))
+            .thenReturn(url)
+
+        // When
+        val result = urlStorage.findByShortUrl(shortUrl)!!
+
+        // Then
+        assertNotNull(result)
+        assertEquals(url.id, result.id)
+        assertEquals(url.shortUrl, result.shortUrl)
+        assertEquals(url.originalUrl, result.originalUrl)
+        verify(redisRepository).set("short_url:$shortUrl", objectMapper.writeValueAsString(url))
+    }
+
+    @Test
+    fun `단축_주소로_찾기_실패`() {
+        // Given
+        val shortUrl = "nonexistent"
+
+        `when`(redisRepository.get("short_url:$shortUrl"))
+            .thenReturn(null)
+
+        `when`(urlRepository.findByShortUrl(shortUrl))
+            .thenReturn(null)
+
+        // When
+        val result = urlStorage.findByShortUrl(shortUrl)
+
+        // Then
+        assertNull(result)
+    }
 }
